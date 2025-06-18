@@ -78,6 +78,17 @@
   </div>
 
   <script>
+    const metodeSelect = document.getElementById('metode');
+    const rekeningCard = document.getElementById('rekeningCard');
+
+    metodeSelect.addEventListener('change', () => {
+    if (metodeSelect.value === 'BCA') {
+      rekeningCard.classList.remove('d-none');
+    } else {
+      rekeningCard.classList.add('d-none');
+    }
+    });
+
     const form = document.getElementById('konfirmasiForm');
     const spinner = document.getElementById('spinner');
     const scriptURL = 'https://script.google.com/macros/s/AKfycbx528e3Yp53NjHRGkUb65TIfUujYfw0pbE4tNhCN1-G-K__Y6ug-RzLLDuI4v1i42wudg/exec'; // Ganti dengan ID script kamu
