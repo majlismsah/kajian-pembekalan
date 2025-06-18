@@ -4,10 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Konfirmasi Pembayaran</title>
-  <!-- Bootstrap (opsional, untuk form layout) -->
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Style iOS-style global -->
+  <!-- Style iOS -->
   <link href="style.css" rel="stylesheet" />
+  <style>
+    .rekening-box {
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      font-weight: 500;
+      color: #212529;
+    }
+  </style>
 </head>
 <body>
   <div class="form-container">
@@ -36,12 +48,12 @@
           <option value="">-- Pilih Bank --</option>
           <option value="BCA">BCA</option>
         </select>
-        
-        <!-- Info rekening -->
-      <div id="rekeningCard" class="rekening-box d-none mt-2">
-      <p><strong>No. Rekening:</strong> 8420964863</p>
-      <p><strong>Nama Pemilik:</strong> Kresnadly</p>
-      </div>
+
+        <!-- Box Info Rekening -->
+        <div id="rekeningCard" class="rekening-box d-none mt-3">
+          <p><strong>No. Rekening:</strong> 8420964863</p>
+          <p><strong>Nama Pemilik:</strong> Kresnadly</p>
+        </div>
       </div>
 
       <div class="form-group">
@@ -77,10 +89,11 @@
     </div>
   </div>
 
+  <!-- Script untuk kirim ke Google Apps Script -->
   <script>
     const form = document.getElementById('konfirmasiForm');
     const spinner = document.getElementById('spinner');
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbx528e3Yp53NjHRGkUb65TIfUujYfw0pbE4tNhCN1-G-K__Y6ug-RzLLDuI4v1i42wudg/exec'; // Ganti dengan ID script kamu
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbx528e3Yp53NjHRGkUb65TIfUujYfw0pbE4tNhCN1-G-K__Y6ug-RzLLDuI4v1i42wudg/exec';
 
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -94,22 +107,25 @@
         spinner.style.display = 'none';
         alert('✅ Konfirmasi berhasil dikirim! Tunggu verifikasi dari admin.');
         form.reset();
+        document.getElementById('rekeningCard').classList.add('d-none');
       })
       .catch(error => {
         spinner.style.display = 'none';
         alert('❌ Gagal mengirim data. Silakan coba lagi.');
       });
+    });
+
+    // Tampilkan info rekening jika BCA dipilih
     const metodeSelect = document.getElementById('metode');
     const rekeningCard = document.getElementById('rekeningCard');
 
     metodeSelect.addEventListener('change', () => {
-    if (metodeSelect.value === 'BCA') {
-      rekeningCard.classList.remove('d-none');
-    } else {
-      rekeningCard.classList.add('d-none');
-    }
+      if (metodeSelect.value === 'BCA') {
+        rekeningCard.classList.remove('d-none');
+      } else {
+        rekeningCard.classList.add('d-none');
+      }
     });
-    
   </script>
 </body>
 </html>
